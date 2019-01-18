@@ -1,0 +1,107 @@
+.items {
+    .item {
+        min-width: 390px;
+        position: relative;
+        border: 2px solid rgba(0, 0, 0, .5);
+        height: 60px;
+        border-radius: 0 20px 20px 0;
+
+        .action {
+            width: 5px;
+            height: 100%;
+            overflow-x: hidden;
+            padding: 0;
+            background: #BADA55;
+            transition: .3s ease-in-out;
+
+            i {
+                transition: .3s ease-in-out;
+                opacity: 0;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .opacity {
+                opacity: 1;
+            }
+
+            .fa-trash-alt {
+                color: #ce0000;
+            }
+        }
+
+        .active {
+            width: 100px;
+            padding: 0 10px;
+        }
+
+        .content {
+
+            .burgerMenu {
+                margin-right: 10px;
+                margin-left: 10px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                .burgerMenuItem {
+                    border: none;
+                    height: 3px;
+                    width: 25px;
+                    margin: 4px;
+                    background: black;
+                    transition: .3s ease-in-out;
+                }
+
+                .item--1 {
+                    transform-origin: left top;
+                    transform: rotate(37deg);
+                }
+
+                .item--2 {
+                    width: 0;
+                }
+
+                .item--3 {
+                    transform-origin: left bottom;
+                    transform: rotate(-37deg);
+                }
+            }
+
+            p {
+                margin: 0;
+            }
+
+            small {
+                font-size: .6em;
+            }
+        }
+
+        .check {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            right: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, .5);
+            color: #FFF;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .bg-green {
+            background: #BADA55;
+        }
+    }
+
+    // ITEM
+}
+
+// ITEMS
+
+

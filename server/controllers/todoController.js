@@ -7,6 +7,7 @@ module.exports = {
     // ======================================
     getTodos (req, res) {
         Todo.find()
+            .sort({due_date: 'asc'})
             .then( (todos) => {
                 res.json(todos)
             })

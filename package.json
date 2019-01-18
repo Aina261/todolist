@@ -1,0 +1,24 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Todo List with MEAN stack",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aina261/todolist.git"
+  },
+  "author": "Arnaud RAMIARASOA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aina261/todolist/issues"
+  },
+  "homepage": "https://github.com/Aina261/todolist#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.4"
+  }
+}

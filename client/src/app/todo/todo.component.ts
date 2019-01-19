@@ -11,6 +11,7 @@ export class TodoComponent implements OnInit {
 
     openActionItem: boolean = false;
     todos: TodoInterface[] = null;
+    todo: TodoInterface= null;
 
     constructor(private todoService: TodoService) {
     }
@@ -31,4 +32,11 @@ export class TodoComponent implements OnInit {
         this.todoService.getTodos().subscribe(todos => this.todos = todos);
     }
 
+    deleteTodo(idItem: string): void {
+        console.log(idItem);
+        if (this.todoService.deleteTodoItem(idItem).subscribe(todo => this.todo = todo)) {
+            const elt = document.getElementById(idItem);
+            elt.parentNode.removeChild(elt);
+        }
+    }
 }

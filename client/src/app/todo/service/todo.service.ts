@@ -30,7 +30,15 @@ export class TodoService {
         return this.http.get<TodoInterface[]>(this.apiUrl, {responseType: 'json'})
             .pipe(
                 tap(() => this.log('Fetched Todos')),
-                catchError(this.handleError('getTodos', []))
+                catchError(this.handleError<TodoInterface[]>('getTodos', []))
+            )
+    }
+
+    getTodo(todoId): Observable<TodoInterface> {
+        return this.http.get<TodoInterface>(`${this.apiUrl}/${todoId}`)
+            .pipe(
+                tap( () => this.log('fetched todo')),
+                catchError(this.handleError<TodoInterface>('No todo found'))
             )
     }
 
@@ -39,6 +47,17 @@ export class TodoService {
             .pipe(
                 tap(() => this.log('delete todo ' + idItem)),
                 catchError(this.handleError<TodoInterface>('Error: '))
+            )
+    }
+
+    addNewTodo(newTodo) {
+        const httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        };
+        return this.http.post<TodoInterface>(this.apiUrl, newTodo, httpOptions)
+            .pipe(
+                tap (() => this.log('New task added')),
+                catchError(this.handleError<TodoInterface>(('Error addNewTask')))
             )
     }
 }

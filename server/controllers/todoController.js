@@ -47,7 +47,7 @@ module.exports = {
 
         todo.save()
             .then( () => {
-                res.send({ result: 'New todo created: ' + todo, success: true })
+                res.send(todo)
             })
             .catch(err => {
                 res.send(err)

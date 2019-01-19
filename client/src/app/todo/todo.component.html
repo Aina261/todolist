@@ -1,11 +1,12 @@
 <app-add-todo></app-add-todo>
+<app-edit-todo></app-edit-todo>
 
 <div class="container items">
     <div class="row mt-3 justify-content-center">
-        <div class="col-11 col-md-8 item d-flex align-items-center px-0 my-2" *ngFor="let todo of todos; let i = index" id="{{ todo._id }}">
+        <div class="col-11 col-md-8 item d-flex align-items-center px-0 my-2" *ngFor="let todo of todos" id="{{ todo._id }}">
             <div class="action d-flex justify-content-around align-items-center" [ngClass]="{active: openActionItem}">
-                <i class="fas fa-pencil-alt" [ngClass]="{opacity: openActionItem}"></i>
-                <i class="far fa-trash-alt" data-toggle="modal" [attr.data-target]="'#modal-' + todo._id "  [ngClass]="{opacity: openActionItem}"></i>
+                <i class="fas fa-pencil-alt" [ngClass]="{opacity: openActionItem}" (click)="editTodo(todo)"></i>
+                <i class="far fa-trash-alt" data-toggle="modal" [attr.data-target]="'#modal-' + todo._id" [ngClass]="{opacity: openActionItem}"></i>
             </div>
 
             <div class="content d-flex justify-content-around align-items-center">
@@ -16,7 +17,7 @@
                 </div>
                 <div class="content">
                     <p>{{ todo.name }}</p>
-                    <small>TODO before {{ todo.due_date | date: 'MMM - dd - yyyy  h:mm a' }}</small>
+                    <small>TODO before {{ todo.due_date | date: 'MMMM - dd - yyyy   h:mm a' }}</small>
                 </div>
             </div>
 
@@ -28,7 +29,7 @@
             </ng-template>
 
             <ng-template #completedFalse>
-                <div class="check d-flex justify-content-around align-items-center">
+                <div class="check d-flex justify-content-around align-items-center" [ngClass]="{'bg-green': checked}" (click)="onCheckedTodo()">
                     <i class="fas fa-check text-secondary"></i>
                 </div>
             </ng-template>

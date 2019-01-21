@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Aina261/todolist#readme",
   "dependencies": {
+    "bcrypt": "3.0.2",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "mongoose": "^5.4.4"

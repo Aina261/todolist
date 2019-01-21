@@ -7,13 +7,13 @@ module.exports = {
     // ======================================
     getTodos (req, res) {
         Todo.find()
+            .sort({due_date: 'asc'})
             .then( (todos) => {
                 res.json(todos)
             })
             .catch( err => {
                 res.send(err)
             })
-
     },
 
 
@@ -46,7 +46,7 @@ module.exports = {
 
         todo.save()
             .then( () => {
-                res.send({ result: 'New todo created: ' + todo, success: true })
+                res.send(todo)
             })
             .catch(err => {
                 res.send(err)

@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {TodoInterface} from '../interface/todo-interface';
+import { Injectable } from '@angular/core';
+import {TodoInterface} from "../inteface/todo-interface";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from "rxjs";
 import {catchError, map, tap} from "rxjs/operators";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class TodoService {
 
@@ -58,6 +58,14 @@ export class TodoService {
             .pipe(
                 tap (() => this.log('New task added')),
                 catchError(this.handleError<TodoInterface>(('Error addNewTask')))
+            )
+    }
+
+    updateTodo(todo, id) {
+        return this.http.put<TodoInterface>(`${this.apiUrl}/${id}`, todo)
+            .pipe(
+                tap (() => this.log('Update task')),
+                catchError(this.handleError<TodoInterface>(('Error updateTodo')))
             )
     }
 }

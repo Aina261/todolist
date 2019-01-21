@@ -1,7 +1,9 @@
-<header class="container-fluid">
-  <div class="row justify-content-center align-items-center">
-    <h1>Todo List</h1>
-  </div>
+<header class="bg-info">
+    <h1 class="d-flex justify-content-center text-white">{{ title | uppercase }}</h1>
 </header>
 
-<app-todo></app-todo>
+<div class="container">
+
+    <router-outlet></router-outlet>
+
+</div>

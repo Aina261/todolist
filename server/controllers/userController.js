@@ -1,4 +1,5 @@
 const User = require('../models/UserModel');
+const Todo = require('../models/todoModel');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -18,13 +19,15 @@ module.exports = {
                 const {email} = req.body;
                 const passwordClear = req.body.password;
                 const password = bcrypt.hashSync(passwordClear, saltRounds);
+                const todo = [];
 
                 console.log(password);
 
                 const user = new User({
                     userName,
                     email,
-                    password
+                    password,
+                    todo
                 });
 
                 user.save()
@@ -68,6 +71,32 @@ module.exports = {
                 } else {
                     res.send({"userLogin": false})
                 }
+            })
+    },
+    
+
+    // ======================================
+    //      UPDATE T\ODO LIST FOR USER
+    // ======================================
+    updateUserTodo (req, res) {
+        const {id} = req.params;
+
+        User.findOne({_id: id})
+            .then( user => {
+                const {name} = req.body.todo[0];
+                const {due_date} = req.body.todo[0];
+
+                const todo = new Todo({
+                    name,
+                    due_date,
+                });
+                user.todo.push(todo);
+
+                user.save().then( () => {
+                    todo.save().then( () => {
+                        res.send('Todo added to user ' + user)
+                    })
+                })
             })
     },
 

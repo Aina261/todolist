@@ -1,4 +1,5 @@
 const User = require('../models/UserModel');
+const Todo = require('../models/todoModel');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -7,33 +8,35 @@ module.exports = {
     // ======================================
     //           REGISTER USER
     // ======================================
-    register (req, res) {
+    register(req, res) {
 
         // Check if userName or email was already use
         User.findOne({
             $or: [{email: req.body.email}, {userName: req.body.userName}]
-        }).then( user => {
+        }).then(user => {
             if (!user) {
                 const {userName} = req.body;
                 const {email} = req.body;
                 const passwordClear = req.body.password;
                 const password = bcrypt.hashSync(passwordClear, saltRounds);
+                const todo = [];
 
                 console.log(password);
 
                 const user = new User({
                     userName,
                     email,
-                    password
+                    password,
+                    todo
                 });
 
                 user.save()
-                    .then( () => {
+                    .then(() => {
                         res.status(200).json({
                             "userCreate": true
                         })
                     })
-                    .catch( err => {
+                    .catch(err => {
                         res.send(err)
                     })
             } else {
@@ -48,14 +51,14 @@ module.exports = {
     // ======================================
     //              LOGIN USER
     // ======================================
-    login (req, res) {
+    login(req, res) {
         const {userName} = req.body;
         const {password} = req.body;
 
         User.findOne({
             userName: userName
         })
-            .then( user => {
+            .then(user => {
                 if (user) {
                     if (bcrypt.compareSync(password, user.password)) {
                         res.status(200).json({
@@ -73,14 +76,40 @@ module.exports = {
 
 
     // ======================================
+    //      UPDATE USER WITH TO\DO ID
+    // ======================================
+    updateUserTodo(req, res) {
+        const {id} = req.params;
+
+        User.findOne({_id: id})
+            .then(user => {
+                const {name} = req.body.todo[0];
+                const {due_date} = req.body.todo[0];
+
+                const todo = new Todo({
+                    name,
+                    due_date,
+                });
+                user.todo.push(todo);
+
+                user.save().then(() => {
+                    todo.save().then(() => {
+                        res.send('Todo added to user ' + user)
+                    })
+                })
+            })
+    },
+
+
+    // ======================================
     //            GET USERNAME
     // ======================================
-    getUserName (req, res) {
+    getUserName(req, res) {
         User.find()
-            .then( (users) => {
+            .then((users) => {
                 res.json(users)
             })
-            .catch( err => {
+            .catch(err => {
                 res.send(err)
             })
     }

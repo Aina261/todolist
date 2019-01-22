@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {TodoInterface} from "../inteface/todo-interface";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from "rxjs";
 import {catchError, map, tap} from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
+
 export class TodoService {
 
-    private apiUrl = 'http://localhost:3050/todo';
+    private apiTodoUrl = 'http://localhost:3050/todo';
 
     private log(message: string) {
         console.log(message);
@@ -24,10 +25,11 @@ export class TodoService {
         };
     }
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
     getTodos(): Observable<TodoInterface[]> {
-        return this.http.get<TodoInterface[]>(this.apiUrl, {responseType: 'json'})
+        return this.http.get<TodoInterface[]>(this.apiTodoUrl, {responseType: 'json'})
             .pipe(
                 tap(() => this.log('Fetched Todos')),
                 catchError(this.handleError<TodoInterface[]>('getTodos', []))
@@ -35,15 +37,15 @@ export class TodoService {
     }
 
     getTodo(todoId): Observable<TodoInterface> {
-        return this.http.get<TodoInterface>(`${this.apiUrl}/${todoId}`)
+        return this.http.get<TodoInterface>(`${this.apiTodoUrl}/${todoId}`)
             .pipe(
-                tap( () => this.log('fetched todo')),
+                tap(() => this.log('fetched todo')),
                 catchError(this.handleError<TodoInterface>('No todo found'))
             )
     }
 
     deleteTodoItem(idItem: string): Observable<TodoInterface> {
-        return this.http.delete<TodoInterface>(`${this.apiUrl}/${idItem}`)
+        return this.http.delete<TodoInterface>(`${this.apiTodoUrl}/${idItem}`)
             .pipe(
                 tap(() => this.log('delete todo ' + idItem)),
                 catchError(this.handleError<TodoInterface>('Error: '))
@@ -52,19 +54,19 @@ export class TodoService {
 
     addNewTodo(newTodo) {
         const httpOptions = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
         };
-        return this.http.post<TodoInterface>(this.apiUrl, newTodo, httpOptions)
+        return this.http.post<TodoInterface>(this.apiTodoUrl, newTodo, httpOptions)
             .pipe(
-                tap (() => this.log('New task added')),
+                tap(() => this.log('New task added')),
                 catchError(this.handleError<TodoInterface>(('Error addNewTask')))
             )
     }
 
     updateTodo(todo, id) {
-        return this.http.put<TodoInterface>(`${this.apiUrl}/${id}`, todo)
+        return this.http.put<TodoInterface>(`${this.apiTodoUrl}/${id}`, todo)
             .pipe(
-                tap (() => this.log('Update task')),
+                tap(() => this.log('Update task')),
                 catchError(this.handleError<TodoInterface>(('Error updateTodo')))
             )
     }

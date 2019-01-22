@@ -112,5 +112,28 @@ module.exports = {
             .catch(err => {
                 res.send(err)
             })
+    },
+
+
+    // ======================================
+    //        GET USER AND TO\DO
+    // ======================================
+    getUserAndTodo(req, res) {
+        User.aggregate([
+            {$unwind: "$todo"},
+            {
+                $lookup: {
+                    from: "TODO_COLLECTION",
+                    localField: "todo",
+                    foreignField: "_id",
+                    as: "todoContent"
+                }
+            },
+            {$unwind: "$todoContent"},
+            {$sort: {"todoContent.due_date": 1}}
+        ])
+            .then( (userTodo) => {
+                res.send(userTodo);
+            } )
     }
 };

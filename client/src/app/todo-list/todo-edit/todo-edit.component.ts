@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, Params} from '@angular/router';
-import {TodoInterface} from "../inteface/todo-interface";
-import {TodoService} from "../service/todo.service";
+import {TodoInterface} from "../../inteface/todo-interface";
+import {TodoService} from "../../service/todo.service";
 
 @Component({
     selector: 'app-todo-edit',

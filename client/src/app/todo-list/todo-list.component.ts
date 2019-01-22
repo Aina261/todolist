@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {TodoInterface} from "./inteface/todo-interface";
-import {TodoService} from "./service/todo.service";
-
+import {TodoInterface} from "../inteface/todo-interface";
+import {TodoService} from "../service/todo.service";
+import {UserInterface} from "../inteface/user-interface";
+import {UserService} from "../service/user.service";
 
 @Component({
     selector: 'app-todo-list',
@@ -16,6 +17,8 @@ export class TodoListComponent implements OnInit {
     todo: TodoInterface = null;
     errorInput = false;
 
+    users: UserInterface[] = null;
+
     bold = {
         'font-weight': 'bold'
     };
@@ -23,12 +26,14 @@ export class TodoListComponent implements OnInit {
     newTodo = {
         name: '',
         due_date: null,
+        userId: ''
     };
 
-    constructor(private router: Router, private todoService: TodoService) {
+    constructor(private router: Router, private todoService: TodoService, private userService: UserService) {
     }
 
     ngOnInit() {
+        this.getUsers();
         this.getTodos();
     }
 
@@ -36,15 +41,28 @@ export class TodoListComponent implements OnInit {
         this.todoService.getTodos().subscribe(todos => this.todos = todos);
     }
 
+    getUsers(): void {
+        this.userService.getUsers().subscribe(users => this.users = users);
+    }
+
     addNewTodo() {
         if (this.newTodo.name.length > 3 && this.newTodo.due_date !== null) {
             this.errorInput = false;
-            this.todoService.addNewTodo(this.newTodo)
-                .subscribe(
-                    () => {
-                        this.todoService.getTodos().subscribe(todos => this.todos = todos);
-                    }
-                )
+            if (this.newTodo.userId.length < 1) {
+                this.todoService.addNewTodo(this.newTodo)
+                    .subscribe(
+                        () => {
+                            this.todoService.getTodos().subscribe(todos => this.todos = todos);
+                        }
+                    )
+            } else {
+                this.userService.addTodoToUser(this.newTodo.userId, {todo: [this.newTodo]})
+                    .subscribe(
+                        () => {
+                            this.todoService.getTodos().subscribe(todos => this.todos = todos);
+                        }
+                    )
+            }
         } else {
             this.errorInput = true;
             setTimeout(() => {

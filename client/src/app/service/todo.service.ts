@@ -11,6 +11,7 @@ import {catchError, map, tap} from "rxjs/operators";
 export class TodoService {
 
     private apiTodoUrl = 'http://localhost:3050/todo';
+    private apiUserUrl = 'http://localhost:3050/user-todo';
 
     private log(message: string) {
         console.log(message);
@@ -29,7 +30,7 @@ export class TodoService {
     }
 
     getTodos(): Observable<TodoInterface[]> {
-        return this.http.get<TodoInterface[]>(this.apiTodoUrl, {responseType: 'json'})
+        return this.http.get<TodoInterface[]>(this.apiUserUrl, {responseType: 'json'})
             .pipe(
                 tap(() => this.log('Fetched Todos')),
                 catchError(this.handleError<TodoInterface[]>('getTodos', []))

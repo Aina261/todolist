@@ -23,7 +23,7 @@
             <div class="col-auto">
                 <label for="User" class="sr-only">Select user</label>
                 <select class="form-control" id="User" [(ngModel)]="newTodo.userId" name="User">
-                    <option *ngFor="let user of users" [value]="user._id" >{{ user.userName }}</option>
+                    <option *ngFor="let user of users" [value]="user._id">{{ user.userName }}</option>
                 </select>
             </div>
 
@@ -36,7 +36,7 @@
 
 <div class="row justify-content-center mt-5">
 
-    <div class="col-12 col-md-8" *ngFor="let todo of todos; index as i" id="{{ todo._id }}">
+    <div class="col-12 col-md-8" *ngFor="let todo of todos; index as i" id="{{ todo.todoContent._id }}" >
 
         <div class="todoItem d-flex justify-content-between align-items-center mb-2 border px-3 py-2">
             <div class="check" (click)="checkedTodo(i)">
@@ -48,23 +48,26 @@
 
             <div class="content flex-fill">
                 <p [ngStyle]="bold" class="mb-0 text-dark"
-                   *ngIf="!todo.completed; else checkTodoName">{{ todo.name }}</p>
+                   *ngIf="!todo.todoContent.completed; else checkTodoName">{{ todo.todoContent.name }}</p>
                 <ng-template #checkTodoName>
-                    <p [ngStyle]="bold" class="mb-0 text-success">{{ todo.name }}</p>
+                    <p [ngStyle]="bold" class="mb-0 text-success">{{ todo.todoContent.name }}</p>
                 </ng-template>
-                <p class="mb-0"></p>
-                <small>DUE DATE: {{ todo.due_date | date: 'MMMM - dd - yyyy   h:mm a' }}</small>
+
+                <p class="mb-0">{{ todo.userName }}</p>
+                <small><span
+                    [ngStyle]="bold">DUE DATE: </span>{{ todo.todoContent.due_date | date: 'MMMM - dd - yyyy   h:mm a' }}
+                </small>
             </div>
 
             <div class="action d-flex ml-2">
-                <i class="fas fa-pencil-alt" (click)="goEdit(todo._id)"></i>
+                <i class="fas fa-pencil-alt" (click)="goEdit(todo.todoContent._id)"></i>
                 <i class="far fa-trash-alt text-danger ml-3" data-toggle="modal"
-                   [attr.data-target]="'#modal-' + todo._id"></i>
+                   [attr.data-target]="'#modal-' + todo.todoContent._id"></i>
             </div>
         </div>
 
         <!-- Delete Modal -->
-        <div class="modal fade" id="modal-{{ todo._id }}" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modal-{{ todo.todoContent._id }}" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -75,7 +78,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteTodo(todo._id)"
+                        <button type="button" class="btn btn-danger" (click)="deleteTodo(todo.todoContent._id)"
                                 data-dismiss="modal">Delete
                         </button>
                     </div>

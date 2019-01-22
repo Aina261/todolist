@@ -47,7 +47,7 @@ export class UserService {
     }
 
     getUsers(): Observable<UserInterface[]> {
-        return this.http.get<UserInterface[]>('http://localhost:3050/users')
+        return this.http.get<UserInterface[]>(this.apiUserUrl)
             .pipe(
                 tap(() => this.log('Fetched Users')),
                 catchError(this.handleError<UserInterface[]>('getUsers', []))

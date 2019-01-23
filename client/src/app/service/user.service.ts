@@ -28,7 +28,7 @@ export class UserService {
     constructor(private http: HttpClient) {}
 
     addTodoToUser(idUser, todo): Observable<any> {
-        return this.http.put(`${this.apiUserUrl}/${idUser}`, todo)
+        return this.http.put(`${this.apiUserUrl}/${idUser}`, todo, {responseType: 'text'})
             .pipe(
                 tap(() => this.log('Update user and add todo')),
                 catchError(this.handleError<any>(('Error addTodoToUser')))

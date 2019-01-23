@@ -13,7 +13,8 @@ import {UserService} from "../service/user.service";
 export class TodoListComponent implements OnInit {
 
 
-    todos: TodoInterface[] = null;
+    actualDate = new Date();
+    todos = null;
     todo: TodoInterface = null;
     errorInput = false;
 
@@ -26,7 +27,7 @@ export class TodoListComponent implements OnInit {
     newTodo = {
         name: '',
         due_date: null,
-        userId: ''
+        userId: null
     };
 
     constructor(private router: Router, private todoService: TodoService, private userService: UserService) {
@@ -46,23 +47,15 @@ export class TodoListComponent implements OnInit {
     }
 
     addNewTodo() {
-        if (this.newTodo.name.length > 3 && this.newTodo.due_date !== null) {
+        if (this.newTodo.name.length >= 1 && this.newTodo.due_date !== null && this.newTodo.userId !== null) {
             this.errorInput = false;
-            if (this.newTodo.userId.length < 1) {
-                this.todoService.addNewTodo(this.newTodo)
-                    .subscribe(
-                        () => {
-                            this.todoService.getTodos().subscribe(todos => this.todos = todos);
-                        }
-                    )
-            } else {
-                this.userService.addTodoToUser(this.newTodo.userId, {todo: [this.newTodo]})
-                    .subscribe(
-                        () => {
-                            this.todoService.getTodos().subscribe(todos => this.todos = todos);
-                        }
-                    )
-            }
+
+            this.userService.addTodoToUser(this.newTodo.userId, {todo: [this.newTodo]})
+                .subscribe(
+                    () => {
+                        this.todoService.getTodos().subscribe(todos => this.todos = todos);
+                    }
+                )
         } else {
             this.errorInput = true;
             setTimeout(() => {
@@ -77,13 +70,13 @@ export class TodoListComponent implements OnInit {
     }
 
     checkedTodo(i) {
-        if (this.todos[i].completed) {
-            this.todos[i].completed = false;
+        if (this.todos[i].todoContent.completed) {
+            this.todos[i].todoContent.completed = false;
         } else {
-            this.todos[i].completed = true;
+            this.todos[i].todoContent.completed = true;
         }
 
-        this.todoService.updateTodo(this.todos[i], this.todos[i]._id).subscribe()
+        this.todoService.updateTodo(this.todos[i].todoContent, this.todos[i].todoContent._id).subscribe()
     }
 
     deleteTodo(idItem: string): void {

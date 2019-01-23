@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, Params} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TodoInterface} from "../../inteface/todo-interface";
 import {TodoService} from "../../service/todo.service";
 
@@ -10,24 +10,25 @@ import {TodoService} from "../../service/todo.service";
 })
 export class TodoEditComponent implements OnInit {
 
-    todo: TodoInterface = null;
+    actualDate = new Date();
+    todo: TodoInterface = undefined;
 
     constructor(private router: Router, private route: ActivatedRoute, private todoService: TodoService) {
     }
 
     ngOnInit() {
-        this.getTodo();
-    }
-
-    getTodo(): void {
         this.todoService.getTodo(this.route.snapshot.params['id'])
             .subscribe( todo => {
                 this.todo = todo;
-            })
+            });
     }
 
     goBack() {
         this.router.navigateByUrl('/todo');
+    }
+
+    changeDueDate(event) {
+        this.todo.due_date = event;
     }
 
     updateTodo() {

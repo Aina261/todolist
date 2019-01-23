@@ -6,7 +6,7 @@
 
 <div class="row justify-content-center" [ngClass]="{'mt-1': errorInput, 'mt-5': !errorInput}">
     <form>
-        <h3>Add Todo</h3>
+        <h3 class="text-center">Add Todo</h3>
         <div class="form-row d-flex justify-content-center">
             <div class="col-auto">
                 <label for="name" class="sr-only">Name </label>
@@ -16,7 +16,7 @@
 
             <div class="col-auto">
                 <label for="name" class="sr-only">Due date </label>
-                <input type="datetime-local" class="form-control mb-2" name="dueDate" id="dueDate"
+                <input type="datetime-local" class="form-control mb-2" name="dueDate" id="dueDate" [min]="actualDate | date: 'yyyy-MM-ddThh:mm'"
                        [(ngModel)]="newTodo.due_date" required placeholder="Name">
             </div>
 
@@ -40,7 +40,7 @@
 
         <div class="todoItem d-flex justify-content-between align-items-center mb-2 border px-3 py-2">
             <div class="check" (click)="checkedTodo(i)">
-                <i class="fas fa-check mr-3" *ngIf="!todo.completed; else checkTodo"></i>
+                <i class="fas fa-check mr-3" *ngIf="!todo.todoContent.completed; else checkTodo"></i>
                 <ng-template #checkTodo>
                     <i class="fas fa-check mr-3 text-success"></i>
                 </ng-template>

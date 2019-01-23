@@ -61,8 +61,9 @@ module.exports = {
     updateTodo(req, res) {
         const {id} = req.params;
         const {name} = req.body;
+        const {due_date} = req.body;
         const {completed} = req.body;
-        Todo.findByIdAndUpdate(id, {name, completed})
+        Todo.findByIdAndUpdate(id, {name, completed,due_date})
             .then((todo) => {
                 res.send({success: true, request: "update", todo})
             })

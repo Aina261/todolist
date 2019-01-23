@@ -97,7 +97,7 @@ module.exports = {
 
                 user.save().then(() => {
                     todo.save().then(() => {
-                        res.send('Todo added to user ' + user)
+                        res.send('Todo ' + todo.name + ' added to user ' + user.userName)
                     })
                 })
             })

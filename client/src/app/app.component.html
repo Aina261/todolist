@@ -1,13 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-    <a class="navbar-brand text-white" href="index.php">
-        {{ title | uppercase }}
-    </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark d-flex justify-content-between">
 
-    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+    <p class="navbar-brand text-white mb-0" (click)="clickLogo()" id="homeTitle">{{ title | uppercase }}</p>
 
-        <button class="btn btn-sm btn-outline-secondary text-white mr-4" type="button" (click)="disconnect()"><i class="fas fa-angle-double-left"></i> Disconnect</button>
+    <button class="btn btn-sm btn-outline-secondary text-white mr-4" type="button" (click)="disconnect()"><i
+        class="fas fa-angle-double-left"></i> Disconnect
+    </button>
 
-    </div>
 </nav>
 
 <div class="container">

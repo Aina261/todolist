@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{@types/bootstrap, @types/express, @types/jquery, @types/material-ui, @types/mongodb, @types/mongoose, @types/node, todolist/client/node_modules, todolist/node_modules}" />
-  </component>
-</project>

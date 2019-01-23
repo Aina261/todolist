@@ -7,8 +7,7 @@ import {catchError, map, tap} from "rxjs/operators";
 @Injectable({
     providedIn: 'root'
 })
-
-export class UserService {
+export class SecurityService {
 
     private apiUserUrl = 'http://localhost:3050/user';
 
@@ -25,21 +24,26 @@ export class UserService {
         };
     }
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
-    addTodoToUser(idUser, todo): Observable<any> {
-        return this.http.put(`${this.apiUserUrl}/${idUser}`, todo)
+    register(user): Observable<UserInterface> {
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
+        };
+        return this.http.post<UserInterface>(this.apiUserUrl, user, httpOptions)
             .pipe(
-                tap(() => this.log('Update user and add todo')),
-                catchError(this.handleError<any>(('Error addTodoToUser')))
+                tap(() => this.log('New user register request')),
+                catchError(this.handleError<UserInterface>(('Error register')))
             )
     }
 
-    getUsers(): Observable<UserInterface[]> {
-        return this.http.get<UserInterface[]>(this.apiUserUrl)
+    login(dataLogin): Observable<any> {
+
+        return this.http.post<any>('http://localhost:3050/login/user', dataLogin)
             .pipe(
-                tap(() => this.log('Fetched Users')),
-                catchError(this.handleError<UserInterface[]>('getUsers', []))
+                tap(() => this.log('Login request')),
+                catchError(this.handleError<any>(('Error login')))
             )
     }
 }

@@ -14,6 +14,7 @@ export class TodoListComponent implements OnInit {
 
 
     actualDate = new Date();
+    reminderDueDate = new Date(this.actualDate.getTime() + (1000 * 60 * 60 * 24));
     todos = null;
     todo: TodoInterface = null;
     errorInput = false;

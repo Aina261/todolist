@@ -17,7 +17,7 @@ import {TodoEditComponent} from "./todo-edit/todo-edit.component";
         TodoRoutingModule
     ],
     providers: [
-        TodoService,
+        TodoService
     ]
 })
 export class TodoModule {

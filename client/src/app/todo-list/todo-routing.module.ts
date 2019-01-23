@@ -3,11 +3,12 @@ import {Routes, RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {TodoListComponent} from "./todo-list.component";
 import {TodoEditComponent} from "./todo-edit/todo-edit.component";
-import {AuthGuardService as AuthGuard} from '../auth/auth-guard.service';
+import {AuthGuardService, AuthGuardService as AuthGuard} from '../auth/auth-guard.service';
+
 
 const todoRoutes: Routes = [
-    {path: 'todo', component: TodoListComponent, /*canActivate: [AuthGuard]*/},
-    {path: 'todo/edit/:id', component: TodoEditComponent, /*canActivate: [AuthGuard]*/}
+    {path: 'todo', component: TodoListComponent, canActivate: [AuthGuard]},
+    {path: 'todo/edit/:id', component: TodoEditComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
@@ -16,7 +17,7 @@ const todoRoutes: Routes = [
         RouterModule.forChild(todoRoutes),
         CommonModule
     ],
-    providers: [AuthGuard],
+    providers: [AuthGuardService, AuthGuard],
     exports: [RouterModule]
 })
 export class TodoRoutingModule {

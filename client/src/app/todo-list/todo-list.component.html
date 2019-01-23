@@ -38,7 +38,7 @@
 
     <div class="col-12 col-md-8" *ngFor="let todo of todos; index as i" id="{{ todo.todoContent._id }}" >
 
-        <div class="todoItem d-flex justify-content-between align-items-center mb-2 border px-3 py-2">
+        <div class="todoItem d-flex justify-content-between align-items-center mb-2 border px-3 py-2" [ngClass]="todo.todoContent.due_date < reminderDueDate ? 'border-danger' : ''">
             <div class="check" (click)="checkedTodo(i)">
                 <i class="fas fa-check mr-3" *ngIf="!todo.todoContent.completed; else checkTodo"></i>
                 <ng-template #checkTodo>

@@ -30,8 +30,6 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('userName', res.user.userName);
                 localStorage.setItem('userEmail', res.user.email);
                 localStorage.setItem('userId', res.user._id);
-
-                console.log(localStorage);
                 this.router.navigate(['/todo']);
             } else {
                 this.infoLoginError = true;

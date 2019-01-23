@@ -1,5 +1,6 @@
 const User = require('../models/UserModel');
 const Todo = require('../models/todoModel');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -9,7 +10,6 @@ module.exports = {
     //           REGISTER USER
     // ======================================
     register(req, res) {
-
         // Check if userName or email was already use
         User.findOne({
             $or: [{email: req.body.email}, {userName: req.body.userName}]
@@ -21,8 +21,6 @@ module.exports = {
                 const password = bcrypt.hashSync(passwordClear, saltRounds);
                 const todo = [];
 
-                console.log(password);
-
                 const user = new User({
                     userName,
                     email,
@@ -32,7 +30,7 @@ module.exports = {
 
                 user.save()
                     .then(() => {
-                        res.status(200).json({
+                        res.send({
                             "userCreate": true
                         })
                     })
@@ -40,7 +38,7 @@ module.exports = {
                         res.send(err)
                     })
             } else {
-                res.status(403).json({
+                res.send({
                     "userCreate": false
                 })
             }
@@ -55,21 +53,26 @@ module.exports = {
         const {userName} = req.body;
         const {password} = req.body;
 
-        User.findOne({
-            userName: userName
-        })
+        User.findOne({ userName: userName })
             .then(user => {
                 if (user) {
                     if (bcrypt.compareSync(password, user.password)) {
-                        res.status(200).json({
+                        const payload = {
+                            id: user._id,
+                            userName: user.userName,
+                            email: user.email
+                        };
+                        let token = jwt.sign(payload, 'secretKey', {expiresIn: 100000});
+                        res.send({
                             "userLogin": true,
-                            user
+                            user,
+                            token
                         })
                     } else {
-                        res.send({"userLogin": false})
+                        res.send({"userLogin": false, "error": "Bad password"})
                     }
                 } else {
-                    res.send({"userLogin": false})
+                    res.send({"userLogin": false, "error": "Bad user name"})
                 }
             })
     },

@@ -13,24 +13,23 @@ export class RegisterComponent implements OnInit {
     infoRegisterSuccess = false;
     infoRegisterError = false;
 
-    constructor(private securityService: SecurityService) {
-    }
+    constructor(private securityService: SecurityService) {}
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     register() {
         this.infoRegisterSuccess = false;
         this.infoRegisterError = false;
 
-        this.securityService.register(this.registerModel).subscribe(res => {
-            if (res.userCreate) {
-                this.infoRegisterSuccess = true;
-                document.getElementById('registerForm').reset();
-            } else {
-                this.infoRegisterError = true;
-            }
-        });
+        this.securityService.register(this.registerModel)
+            .subscribe(res => {
+                console.log(res);
+                /*if (res.userCreate) {
+                    this.infoRegisterSuccess = true;
+                    document.getElementById('registerForm').reset();
+                } else {
+                    this.infoRegisterError = true;
+                }*/
+            });
     }
-
 }

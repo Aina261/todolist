@@ -40,7 +40,7 @@ export class SecurityService {
 
     login(dataLogin): Observable<any> {
 
-        return this.http.get<any>('http://localhost:3050/login/user', dataLogin)
+        return this.http.post<any>('http://localhost:3050/login/user', dataLogin)
             .pipe(
                 tap(() => this.log('Login request')),
                 catchError(this.handleError<any>(('Error login')))

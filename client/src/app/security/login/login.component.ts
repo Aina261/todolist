@@ -9,29 +9,30 @@ import {SecurityService} from "../../service/security.service";
 })
 export class LoginComponent implements OnInit {
 
-    infoLoginError = false;
-
     loginModel: any = {};
+
+    infoLoginError = false;
 
     constructor(
         private router: Router,
         private securityService: SecurityService,
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
+        console.log(localStorage);
     }
 
     login() {
         this.infoLoginError = false;
 
-        console.log(this.loginModel);
-        this.securityService.login({
-            "userName": this.loginModel.userName,
-            "password": this.loginModel.password
-        }).subscribe(res => {
+        this.securityService.login(this.loginModel).subscribe(res => {
             if (res.userLogin) {
-                localStorage.setItem('userLogin', JSON.stringify({login: this.loginModel.username}));
+                localStorage.setItem('token', res.token);
+                localStorage.setItem('userName', res.user.userName);
+                localStorage.setItem('userEmail', res.user.email);
+                localStorage.setItem('userId', res.user._id);
+
+                console.log(localStorage);
                 this.router.navigate(['/todo']);
             } else {
                 this.infoLoginError = true;

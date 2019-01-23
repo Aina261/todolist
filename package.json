@@ -1,5 +1,8 @@
 {
   "name": "todolist",
+  "peerDependencies": {
+    "chai": "1.x"
+  },
   "version": "1.0.0",
   "description": "Todo List with MEAN stack",
   "main": "app.js",
@@ -17,9 +20,11 @@
   },
   "homepage": "https://github.com/Aina261/todolist#readme",
   "dependencies": {
+    "@auth0/angular-jwt": "^2.1.0",
     "bcrypt": "3.0.2",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "mongoose": "^5.4.4"
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.6"
   }
 }

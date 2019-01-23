@@ -1,17 +1,18 @@
 const Todo = require('../models/todoModel');
+const User = require('../models/UserModel');
 
 module.exports = {
 
     // ======================================
     //              GET TODOS
     // ======================================
-    getTodos (req, res) {
+    getTodos(req, res) {
         Todo.find()
             .sort({due_date: 'asc'})
-            .then( (todos) => {
+            .then((todos) => {
                 res.json(todos)
             })
-            .catch( err => {
+            .catch(err => {
                 res.send(err)
             })
     },
@@ -20,7 +21,7 @@ module.exports = {
     // ======================================
     //          GET TASK BY ID
     // ======================================
-    getTodo (req, res) {
+    getTodo(req, res) {
         const {id} = req.params;
         Todo.findById({_id: id})
             .then(todo => {
@@ -35,7 +36,7 @@ module.exports = {
     // ======================================
     //              CREATE TASK
     // ======================================
-    createTodo (req, res) {
+    createTodo(req, res) {
         const {name} = req.body;
         const {due_date} = req.body;
 
@@ -45,7 +46,7 @@ module.exports = {
         });
 
         todo.save()
-            .then( () => {
+            .then(() => {
                 res.send(todo)
             })
             .catch(err => {
@@ -57,7 +58,7 @@ module.exports = {
     // ======================================
     //          UDPATE TASK BY ID
     // ======================================
-    updateTodo (req, res) {
+    updateTodo(req, res) {
         const {id} = req.params;
         const {name} = req.body;
         const {completed} = req.body;
@@ -74,17 +75,28 @@ module.exports = {
     // ======================================
     //          DELETE TASK BY ID
     // ======================================
-    deleteTodo (req, res) {
+    deleteTodo(req, res) {
         const {id} = req.params;
-        Todo.findOneAndDelete({_id: id})
-            .then(() => {
-                res.send({success: true, request: "delete"})
-            })
-            .catch(err => {
-                res.send(err)
+
+        Todo.findOne({_id: id})
+            .then(todo => {
+                User.findOne({todo: todo})
+                    .then(user => {
+                        const todoIndex = user.todo.indexOf(todo._id);
+                        user.todo.splice(todoIndex, 1);
+
+                        user.save().then( () => {
+                            Todo.findOneAndDelete({_id: id})
+                                .then(() => {
+                                    res.send({success: true, request: "delete"})
+                                })
+                                .catch(err => {
+                                    res.send(err)
+                                })
+                        })
+                    })
             })
     },
-
 
 
 };

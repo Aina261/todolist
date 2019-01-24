@@ -48,13 +48,15 @@ export class TodoListComponent implements OnInit {
     }
 
     addNewTodo() {
-        if (this.newTodo.name.length >= 1 && this.newTodo.due_date !== null && this.newTodo.userId !== null) {
+        if (this.newTodo.name.length >= 1 && this.newTodo.due_date !== null && this.newTodo.userId !== null && this.newTodo.userId !== "" ) {
             this.errorInput = false;
 
             this.userService.addTodoToUser(this.newTodo.userId, {todo: [this.newTodo]})
                 .subscribe(
                     () => {
                         this.todoService.getTodos().subscribe(todos => this.todos = todos);
+                        const addNewTodoForm = document.getElementById('addNewTodo') as HTMLFormElement;
+                        addNewTodoForm.reset();
                     }
                 )
         } else {

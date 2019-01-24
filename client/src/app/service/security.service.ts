@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {UserInterface} from "../inteface/user-interface";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from "rxjs";
-import {catchError, map, tap} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -27,14 +26,14 @@ export class SecurityService {
     constructor(private http: HttpClient) {
     }
 
-    register(user): Observable<UserInterface> {
+    register(user): Observable<any> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         };
-        return this.http.post<UserInterface>(this.apiUserUrl, user, httpOptions)
+        return this.http.post<any>(this.apiUserUrl, user, httpOptions)
             .pipe(
                 tap(() => this.log('New user register request')),
-                catchError(this.handleError<UserInterface>(('Error register')))
+                catchError(this.handleError<any>(('Error register')))
             )
     }
 

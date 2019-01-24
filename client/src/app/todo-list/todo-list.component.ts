@@ -25,7 +25,7 @@ export class TodoListComponent implements OnInit {
         'font-weight': 'bold'
     };
 
-    newTodo = {
+    newTodo: any = {
         name: '',
         due_date: null,
         userId: null

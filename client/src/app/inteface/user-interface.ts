@@ -4,4 +4,5 @@ export interface UserInterface {
     createdDate: Date;
     email: String;
     todo: Array<String>;
+    password: String;
 }

@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark d-flex justify-content-between">
+
+    <p class="navbar-brand text-white mb-0" (click)="clickLogo()" id="homeTitle">{{ title | uppercase }}</p>
+    
+    <button class="btn btn-sm btn-outline-secondary text-white mr-4" type="button" (click)="disconnect()" *ngIf="ifLogged()"><i
+        class="fas fa-angle-double-left"></i> Disconnect
+    </button>
+
+</nav>
+
+<div class="container mt-5">
+
+    <router-outlet></router-outlet>
+
+</div>

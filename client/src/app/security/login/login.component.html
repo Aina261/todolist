@@ -1,0 +1,19 @@
+<div class="login-wrapper">
+    <h2 class="text-center">Login</h2>
+    <div class="alert alert-danger" role="alert" *ngIf="infoLoginError">
+        Can not login, please check your login.
+    </div>
+    <form name="form">
+        <div class="form-group">
+            <label for="userNameLogin">User name</label>
+            <input type="text" class="form-control" name="userNameLogin" id="userNameLogin" [(ngModel)]="loginModel.userName" required/>
+        </div>
+        <div class="form-group">
+            <label for="passwordLogin">Password</label>
+            <input type="password" class="form-control" name="passwordLogin" id="passwordLogin" [(ngModel)]="loginModel.password" required/>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary pull-right" (click)="login()">Login</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,20 @@
+
+<div class="row flex-column align-items-center mt-5" *ngIf="todo">
+    <h3>Edit Todo</h3>
+    <form class="col-12 col-md-8">
+        <div class="form-group">
+            <label for="name" class="col-form-label">Name : </label>
+            <input type="text" class="form-control" name="name" id="name" [(ngModel)]="todo.name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dueDate" class="col-form-label">Due date : </label>
+            <input type="datetime-local" class="form-control" name="dueDate" id="dueDate" [min]="actualDate | date: 'yyyy-MM-ddThh:mm'" [ngModel]="todo.due_date | date: 'yyyy-MM-ddThh:mm'" (ngModelChange)="changeDueDate($event)" required/>
+        </div>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-secondary" (click)="goBack()" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success ml-2" (click)="updateTodo()">Update</button>
+        </div>
+    </form>
+</div>

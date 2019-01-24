@@ -65,7 +65,11 @@ module.exports = {
                         let token = jwt.sign(payload, 'secretKey', {expiresIn: 100000});
                         res.send({
                             "userLogin": true,
-                            user,
+                            "user": {
+                                _id: user._id,
+                                userName: user.userName,
+                                email: user.email
+                            },
                             token
                         })
                     } else {

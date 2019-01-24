@@ -5,7 +5,7 @@
 </div>
 
 <div class="row justify-content-center" [ngClass]="{'mt-1': errorInput, 'mt-5': !errorInput}">
-    <form>
+    <form id="addNewTodo">
         <h3 class="text-center">Add Todo</h3>
         <div class="form-row d-flex justify-content-center">
             <div class="col-auto">
@@ -23,6 +23,7 @@
             <div class="col-auto">
                 <label for="User" class="sr-only">Select user</label>
                 <select class="form-control" id="User" [(ngModel)]="newTodo.userId" name="User">
+                    <option value="" selected disabled >Select your user</option>
                     <option *ngFor="let user of users" [value]="user._id">{{ user.userName }}</option>
                 </select>
             </div>

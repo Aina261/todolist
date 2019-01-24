@@ -4,14 +4,18 @@
         Sorry, the user name or email has been already used.
     </div>
 
+    <div class="alert alert-danger" role="alert" *ngIf="invalidRegisterForm">
+        All fields must be completed
+    </div>
+
     <div class="alert alert-success" role="alert" *ngIf="infoRegisterSuccess">
         Thank you for register, you can now login.
     </div>
 
     <form name="form" id="registerForm">
         <div class="form-group">
-            <label for="username">User name</label>
-            <input type="text" class="form-control" name="username" id="username" [(ngModel)]="registerModel.userName"
+            <label for="userName">User name</label>
+            <input type="text" class="form-control" name="userName" id="userName" [(ngModel)]="registerModel.userName"
                    autocomplete="off"
                    required/>
         </div>

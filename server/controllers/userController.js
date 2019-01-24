@@ -109,9 +109,9 @@ module.exports = {
 
 
     // ======================================
-    //            GET USERNAME
+    //            GET USER
     // ======================================
-    getUserName(req, res) {
+    getUser(req, res) {
         User.find()
             .then((users) => {
                 res.json(users)

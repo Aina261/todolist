@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/');
     }
 
-    onClickLogo() {
+    clickLogo() {
         this.router.navigateByUrl('/todo');
     }
 }

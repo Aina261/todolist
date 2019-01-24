@@ -1,0 +1,90 @@
+<div class="row justify-content-center">
+    <div class="alert alert-danger w-100" role="alert" *ngIf="errorInput">
+        All fields must be completed
+    </div>
+</div>
+
+<div class="row justify-content-center" [ngClass]="{'mt-1': errorInput, 'mt-5': !errorInput}">
+    <form id="addNewTodo">
+        <h3 class="text-center">Add Todo</h3>
+        <div class="form-row d-flex justify-content-center">
+            <div class="col-auto">
+                <label for="name" class="sr-only">Name </label>
+                <input type="text" class="form-control mb-2" name="name" id="name" [(ngModel)]="newTodo.name"
+                       required placeholder="Name">
+            </div>
+
+            <div class="col-auto">
+                <label for="name" class="sr-only">Due date </label>
+                <input type="datetime-local" class="form-control mb-2" name="dueDate" id="dueDate" [min]="actualDate | date: 'yyyy-MM-ddThh:mm'"
+                       [(ngModel)]="newTodo.due_date" required placeholder="Name">
+            </div>
+
+            <div class="col-auto">
+                <label for="User" class="sr-only">Select user</label>
+                <select class="form-control" id="User" [(ngModel)]="newTodo.userId" name="User">
+                    <option value="" selected disabled >Select your user</option>
+                    <option *ngFor="let user of users" [value]="user._id">{{ user.userName }}</option>
+                </select>
+            </div>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-success" (click)="addNewTodo()">Add</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row justify-content-center mt-5">
+
+    <div class="col-12 col-md-8" *ngFor="let todo of todos; index as i" id="{{ todo.todoContent._id }}" >
+
+        <div class="todoItem d-flex justify-content-between align-items-center mb-2 border px-3 py-2" [ngClass]="todo.todoContent.due_date < reminderDueDate ? 'border-danger' : ''">
+            <div class="check" (click)="checkedTodo(i)">
+                <i class="fas fa-check mr-3" *ngIf="!todo.todoContent.completed; else checkTodo"></i>
+                <ng-template #checkTodo>
+                    <i class="fas fa-check mr-3 text-success"></i>
+                </ng-template>
+            </div>
+
+            <div class="content flex-fill">
+                <p [ngStyle]="bold" class="mb-0 text-dark"
+                   *ngIf="!todo.todoContent.completed; else checkTodoName">{{ todo.todoContent.name }}</p>
+                <ng-template #checkTodoName>
+                    <p [ngStyle]="bold" class="mb-0 text-success">{{ todo.todoContent.name }}</p>
+                </ng-template>
+
+                <p class="mb-0">{{ todo.userName }}</p>
+                <small><span
+                    [ngStyle]="bold">DUE DATE: </span>{{ todo.todoContent.due_date | date: 'MMMM - dd - yyyy   h:mm a' }}
+                </small>
+            </div>
+
+            <div class="action d-flex ml-2">
+                <i class="fas fa-pencil-alt" (click)="goEdit(todo.todoContent._id)"></i>
+                <i class="far fa-trash-alt text-danger ml-3" data-toggle="modal"
+                   [attr.data-target]="'#modal-' + todo.todoContent._id"></i>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="modal-{{ todo.todoContent._id }}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModal">Do you really want to delete this todo ?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteTodo(todo.todoContent._id)"
+                                data-dismiss="modal">Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

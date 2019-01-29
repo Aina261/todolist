@@ -6,7 +6,7 @@ Todo List with MEAN stack
 
 #### Serveur
 - Install dependancy `npm i`
-- Run MongoDb on 3050 port without user name and password ( You can change it on app.js )
+- Run MongoDb on 27017 port without user name and password ( You can change it on app.js )
 - Run app.js `$ nodemon app.js`, if you not use nodemon run `$ node app.js`
 - Listen 3050 port
 

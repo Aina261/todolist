@@ -25,7 +25,7 @@
         "@auth0/angular-jwt": "^2.1.0",
         "@fortawesome/fontawesome-free": "^5.6.3",
         "angular2-datetimepicker": "^1.1.1",
-        "bootstrap": "^4.2.1",
+        "bootstrap": "^4.3.1",
         "core-js": "^2.5.4",
         "jsonwebtoken": "^8.4.0",
         "rxjs": "~6.3.3",

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/client/src/app/security/login/login.component.ts" libraries="{HTTP Response Handler}" />
-    <file url="PROJECT" libraries="{@types/bootstrap, @types/express, @types/jquery, @types/material-ui, @types/mongodb, @types/mongoose, @types/node, todolist/node_modules}" />
-  </component>
-</project>

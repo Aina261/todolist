@@ -62,7 +62,7 @@ typings/
 # next.js build output
 .next
 
-.gitignore
+.idea/
 .idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
